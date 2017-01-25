@@ -1,5 +1,6 @@
 package com.example.jeff.jcho1_sizebook;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+
+import com.google.gson.Gson;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -19,7 +22,7 @@ import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     private static final String FILENAME = "file.sav";
     public Button getSaveButton() {
@@ -64,13 +67,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /*
     @Override
     protected void onStart() {
         // TODO Auto-generated method stub
         super.onStart();
         loadFromFile();
-        adapter = new ArrayAdapter<Record>(this, R.layout.list_item, records);
+        adapter = new ArrayAdapter<Record>(this, R.layout.list_view, records);
         oldRecordsList.setAdapter(adapter);
     }
 
@@ -104,6 +106,6 @@ public class MainActivity extends AppCompatActivity {
             throw new RuntimeException(e);
         }
     }
-    */
+
 }
 
