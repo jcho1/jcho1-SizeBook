@@ -19,7 +19,6 @@
         android:layout_height="263dp"
         android:layout_weight="1"
         android:scrollbars="vertical" >
-
     </ListView>
 
     <TextView

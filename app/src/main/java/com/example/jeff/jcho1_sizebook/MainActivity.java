@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -25,31 +26,11 @@ import java.util.ArrayList;
 public class MainActivity extends Activity {
 
     private static final String FILENAME = "file.sav";
-    public Button getSaveButton() {
-        return saveButton;
-    }
-
-    private Button saveButton;
-
-    public EditText getBodyText() {
-        return bodyText;
-    }
+    public final static String EXTRA_MESSAGE = "com.example.jeff.jcho1_sizebook.MESSAGE";
 
     private EditText bodyText;
-
-    public ListView getOldRecordsList() {
-        return oldRecordsList;
-    }
-
     private ListView oldRecordsList;
-
-    public ArrayList<Record> getRecords() {
-        return records;
-    }
-
-    private ArrayList<Record> records = new ArrayList<Record>();
-    private ArrayAdapter<Record> adapter;
-
+    private ArrayList<Record> records;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,14 +38,15 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         bodyText = (EditText) findViewById(R.id.name); //view
-        saveButton = (Button) findViewById(R.id.save);
         oldRecordsList = (ListView) findViewById(R.id.oldRecordsList); //view
-
     }
 
     public void save(View v) {
-        String text = bodyText.getText().toString();
-
+        Intent intent = new Intent(this, new_entry.class);
+        EditText editText = (EditText) findViewById(R.id.name);
+        String message = editText.getText().toString();
+        intent.putExtra(EXTRA_MESSAGE, message);
+        startActivity(intent);
     }
 
     @Override
@@ -72,7 +54,7 @@ public class MainActivity extends Activity {
         // TODO Auto-generated method stub
         super.onStart();
         loadFromFile();
-        adapter = new ArrayAdapter<Record>(this, R.layout.list_view, records);
+        ArrayAdapter<Record> adapter = new ArrayAdapter<Record>(this, R.layout.list_view, records);
         oldRecordsList.setAdapter(adapter);
     }
 
@@ -82,7 +64,7 @@ public class MainActivity extends Activity {
             BufferedReader in = new BufferedReader(new InputStreamReader(fis));
             Gson gson = new Gson();
             // Taken from https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/Gson.html 2015-09-22
-            Type listType = new TypeToken<ArrayList<NormalTweet>>() {}.getType();
+            Type listType = new TypeToken<ArrayList<Record>>(){}.getType();
             records = gson.fromJson(in, listType);
         } catch (FileNotFoundException e) {
             records = new ArrayList<Record>();
@@ -90,22 +72,5 @@ public class MainActivity extends Activity {
             throw new RuntimeException(e);
         }
     }
-
-    private void saveInFile() {
-        try {
-            FileOutputStream fos = openFileOutput(FILENAME,
-                    0);
-            OutputStreamWriter writer = new OutputStreamWriter(fos);
-            Gson gson = new Gson();
-            gson.toJson(records, writer);
-            writer.flush();
-            fos.close();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 }
 
