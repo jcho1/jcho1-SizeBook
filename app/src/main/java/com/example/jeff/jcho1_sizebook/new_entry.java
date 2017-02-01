@@ -23,6 +23,7 @@ public class new_entry extends AppCompatActivity {
     private ArrayList<Record> recordArrayList;
     private EditText editText;
     private ArrayAdapter<Record> adapter;
+    private Measurements measurements;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,6 @@ public class new_entry extends AppCompatActivity {
     private void Save(){
         setResult(RESULT_OK);
         String text = editText.getText().toString();
-
         EditText commentText = (EditText) findViewById(R.id.entry_name);
         String comment = commentText.getText().toString();
 
@@ -75,12 +75,13 @@ public class new_entry extends AppCompatActivity {
         }
 
         // Add measurements to record
-        record.setNeck(neck);
-        record.setBust(bust);
-        record.setChest(chest);
-        record.setChest(waist);
-        record.setHip(hip);
-        record.setInseam(inseam);
+        measurements.setNeck(neck);
+        measurements.setBust(bust);
+        measurements.setChest(chest);
+        measurements.setChest(waist);
+        measurements.setHip(hip);
+        measurements.setInseam(inseam);
+        record.setMeasurements(measurements);
 
         // Add comment
         record.setComment(comment);
