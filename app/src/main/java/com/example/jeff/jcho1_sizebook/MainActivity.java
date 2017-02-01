@@ -36,7 +36,6 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         bodyText = (EditText) findViewById(R.id.name); //view
         oldRecordsList = (ListView) findViewById(R.id.oldRecordsList); //view
     }
