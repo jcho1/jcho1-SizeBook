@@ -3,8 +3,10 @@ package com.example.jeff.jcho1_sizebook;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,10 +22,18 @@ import java.util.ArrayList;
 public class new_entry extends AppCompatActivity {
 
     private static final String FILENAME = "file.sav";
-    private ArrayList<Record> recordArrayList;
     private EditText editText;
-    private ArrayAdapter<Record> adapter;
+    private EditText neckText;
+    private EditText bustText;
+    private EditText chestText;
+    private EditText waistText;
+    private EditText hipText;
+    private EditText inseamText;
+    private EditText commentText;
+
     private Measurements measurements;
+    private ArrayAdapter<Record> adapter;
+    private ArrayList<Record> recordArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,34 +42,35 @@ public class new_entry extends AppCompatActivity {
 
         Intent intent = getIntent();
 
+        // set variable id
+        editText = (EditText) findViewById(R.id.entry_name);
+        neckText = (EditText) findViewById(R.id.neck);
+        bustText = (EditText) findViewById(R.id.bust);
+        chestText = (EditText) findViewById(R.id.chest);
+        waistText = (EditText) findViewById(R.id.waist);
+        hipText = (EditText) findViewById(R.id.hip);
+        inseamText = (EditText) findViewById(R.id.inseam);
+        commentText = (EditText) findViewById(R.id.comment);
+
         // Set name previously entered
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
-        editText = (EditText) findViewById(R.id.entry_name);
         editText.setText(message);
     }
 
-    private void Save(){
+    public void saveEntry(View view){
         setResult(RESULT_OK);
-        String text = editText.getText().toString();
-        EditText commentText = (EditText) findViewById(R.id.entry_name);
-        String comment = commentText.getText().toString();
 
-        EditText neckText = (EditText) findViewById(R.id.neck);
         float neck = 0;
-        EditText bustText = (EditText) findViewById(R.id.bust);
         float bust = 0;
-        EditText chestText = (EditText) findViewById(R.id.chest);
         float chest = 0;
-        EditText waistText = (EditText) findViewById(R.id.waist);
         float waist = 0;
-        EditText hipText = (EditText) findViewById(R.id.hip);
         float hip = 0;
-        EditText inseamText = (EditText) findViewById(R.id.inseam);
         float inseam = 0;
 
 
         // save Name in records
         // TODO: ADD DATE
+        String text = editText.getText().toString();
         Record record = new Record(text);
 
         // Get measurements
@@ -78,12 +89,13 @@ public class new_entry extends AppCompatActivity {
         measurements.setNeck(neck);
         measurements.setBust(bust);
         measurements.setChest(chest);
-        measurements.setChest(waist);
+        measurements.setWaist(waist);
         measurements.setHip(hip);
         measurements.setInseam(inseam);
         record.setMeasurements(measurements);
 
         // Add comment
+        String comment = commentText.getText().toString();
         record.setComment(comment);
 
         // Add record
@@ -93,6 +105,15 @@ public class new_entry extends AppCompatActivity {
         saveInFile();
     }
 
+    public void clear(View v){
+        neckText.setText("");
+        bustText.setText("");
+        chestText.setText("");
+        waistText.setText("");
+        hipText.setText("");
+        inseamText.setText("");
+        commentText.setText("");
+    }
     private void saveInFile() {
         try {
             FileOutputStream fos = openFileOutput(FILENAME,
