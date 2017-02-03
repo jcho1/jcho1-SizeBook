@@ -16,7 +16,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".new_entry.new_entry" />
-        <activity android:name=".new_entry"></activity>
     </application>
 
 </manifest>

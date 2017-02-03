@@ -28,10 +28,120 @@
         android:text="@string/entry" />
 
     <EditText
-        android:id="@+id/name"
+        android:id="@+id/entry_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="horizontal" />
+        android:hint = "Name of the fatty"
+        android:textAlignment="center"/>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/activity_new_entry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/date"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="date"
+                    android:ems="10"
+                    android:scrollbars="horizontal"
+                    android:hint="Date: YYYY/MM/DD"/>
+
+                <EditText
+                    android:id="@+id/neck"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:ems="10"
+                    android:scrollbars="horizontal"
+                    android:hint="Neck in Inches"/>
+
+                <EditText
+                    android:id="@+id/bust"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="horizontal"
+                    android:inputType="numberDecimal"
+                    android:ems="10"
+                    android:hint="Bust in Inches"/>
+
+
+                <EditText
+                    android:id="@+id/chest"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="horizontal"
+                    android:inputType="numberDecimal"
+                    android:ems="10"
+                    android:hint="Chest in Inches"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/waist"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="horizontal"
+                    android:inputType="numberDecimal"
+                    android:ems="10"
+                    android:hint="Waist in Inches"/>
+
+
+                <EditText
+                    android:id="@+id/hip"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="horizontal"
+                    android:inputType="numberDecimal"
+                    android:ems="10"
+                    android:hint="Hip in Inches"/>
+
+
+                <EditText
+                    android:id="@+id/inseam"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="horizontal"
+                    android:inputType="numberDecimal"
+                    android:ems="10"
+                    android:hint="Inseam in inches"/>
+
+                <EditText
+                    android:id="@+id/comment"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="horizontal"
+                    android:ems="10"
+                    android:hint= "Comments"/>
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/save"

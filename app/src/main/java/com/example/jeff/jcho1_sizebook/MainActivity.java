@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -30,21 +31,21 @@ public class MainActivity extends Activity {
     private EditText bodyText;
     private ListView oldRecordsList;
     private ArrayList<Record> records;
+    private ArrayAdapter<Record> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        bodyText = (EditText) findViewById(R.id.name); //view
+        bodyText = (EditText) findViewById(R.id.entry_name); //view
         oldRecordsList = (ListView) findViewById(R.id.oldRecordsList); //view
     }
 
     public void save(View v) {
-        Intent intent = new Intent(this, new_entry.class);
-        EditText editText = (EditText) findViewById(R.id.name);
-        String message = editText.getText().toString();
-        intent.putExtra(EXTRA_MESSAGE, message);
-        startActivity(intent);
+        setResult(RESULT_OK);
+
+        adapter.notifyDataSetChanged();
+        saveInFile();
     }
 
     @Override
@@ -54,6 +55,23 @@ public class MainActivity extends Activity {
         loadFromFile();
         ArrayAdapter<Record> adapter = new ArrayAdapter<Record>(this, R.layout.list_view, records);
         oldRecordsList.setAdapter(adapter);
+    }
+
+    private void saveInFile() {
+        try {
+            FileOutputStream fos = openFileOutput(FILENAME, 0);
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
+
+            Gson gson = new Gson();
+            gson.toJson(records, out);
+            out.flush();
+
+            fos.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException();
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
     }
 
     private void loadFromFile() {
