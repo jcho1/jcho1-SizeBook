@@ -8,10 +8,10 @@
     tools:context="com.example.jeff.jcho1_sizebook.MainActivity">
 
     <TextView
-        android:id="@+id/oldTweetsTitle"
+        android:id="@+id/entry_num"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Personal Records" />
+        android:text="Number of Entries: " />
 
     <ListView
         android:id="@+id/oldRecordsList"
@@ -20,12 +20,6 @@
         android:layout_weight="1"
         android:scrollbars="vertical" >
     </ListView>
-
-    <TextView
-        android:id="@+id/hello"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/entry" />
 
     <EditText
         android:id="@+id/entry_name"
@@ -143,11 +137,35 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/save"
-        android:layout_width="fill_parent"
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add New Entry"
-        android:onClick="save"/>
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width = "0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Clear"
+            android:onClick="button1"/>
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width = "0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="Delete"
+            android:onClick="delete"/>
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width = "0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Create New"
+            android:onClick="button3"/>
+    </LinearLayout>
 
 </LinearLayout>

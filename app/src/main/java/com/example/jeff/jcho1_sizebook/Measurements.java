@@ -14,6 +14,15 @@ public class Measurements{
     private float hip;
     private float inseam;
 
+    public Measurements(){
+        this.neck=0;
+        this.bust=0;
+        this.chest=0;
+        this.waist=0;
+        this.hip=0;
+        this.inseam=0;
+    }
+
     public float getNeck() {
         return neck;
     }
