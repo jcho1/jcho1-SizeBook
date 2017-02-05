@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.icu.util.Measure;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,6 +28,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -70,6 +72,7 @@ public class MainActivity extends Activity {
                 // Get old data and put it into editText
                 Measurements oldmeasurement = recordsList.get(position).getMeasurements();
                 editText.setText(recordsList.get(position).getName());
+                dateText.setText(recordsList.get(position).getDate());
                 commentText.setText(recordsList.get(position).getComment());
                 neckText.setText(""+oldmeasurement.getNeck());
                 bustText.setText(""+oldmeasurement.getBust());
@@ -78,14 +81,13 @@ public class MainActivity extends Activity {
                 hipText.setText(""+oldmeasurement.getHip());
                 inseamText.setText(""+oldmeasurement.getInseam());
 
-                Toast.makeText(getBaseContext(),"Old Entry " + position,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(),"Showing Entry" + position+1,Toast.LENGTH_SHORT).show();
 
                 // Change to edit mode
                 editMode = true;
                 Button button1 = (Button) findViewById(R.id.button1);
                 Button button2 = (Button) findViewById(R.id.button2);
                 Button button3 = (Button) findViewById(R.id.button3);
-
                 button1.setText("Back");
                 button2.setVisibility(View.VISIBLE);
                 button3.setText("Change/Edit");
@@ -99,6 +101,7 @@ public class MainActivity extends Activity {
         loadFromFile();
 
         editText = (EditText) findViewById(R.id.entry_name);
+        dateText = (EditText) findViewById(R.id.date);
         neckText = (EditText) findViewById(R.id.neck);
         bustText = (EditText) findViewById(R.id.bust);
         chestText = (EditText) findViewById(R.id.chest);
@@ -112,16 +115,22 @@ public class MainActivity extends Activity {
         changeListCount();
     }
 
+    /**
+     * Checks to see if the input edit text is empty
+     * @param etText edit text id
+     * @return boolean true or false to question is it empty?
+     */
     private boolean isEmpty(EditText etText) {
         return etText.getText().toString().trim().length() == 0;
     }
 
-    public String dateToString(Date date){
-        //to convert Date to String, use format method of SimpleDateFormat class
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/mm/dd");
-        return dateFormat.format(date);
-    }
-
+    /**
+     * Right most button in the activity interface
+     * Checks to make sure name colume is not empty
+     * on edit mode method recreates record object and input in the correct index to replace old
+     * on regular / initial starting mode, method creates new object and insert to end of list
+     * @param v nothing
+     */
     public void button3(View v){
 
         // Check to if Name entry is valid
@@ -138,14 +147,20 @@ public class MainActivity extends Activity {
             recordsList.add(record);
         }
 
+        clear();
         adapter.notifyDataSetChanged();
         saveInFile();
         changeListCount();
     }
 
+    /**
+     * Left most button on activity interface
+     * On edit mode this method converts back to initial mode
+     * On initial mode it clears enteries
+     * @param v nothing
+     */
     public void button1(View v){
         if(editMode) { // Exiting edit mode
-            editMode = false;
             exitEditMode();
             clear();
         }else{
@@ -153,12 +168,20 @@ public class MainActivity extends Activity {
         }
     }
 
+    /**
+     * Changes the total record number counter on the main activity as seen in top of the activity
+     */
     private void changeListCount(){
         TextView entry_num = (TextView) findViewById(R.id.entry_num);
         entry_num.setText("Number of Entries: " + recordsList.size());
     }
 
+    /**
+     * Changes the button settings on the activity
+     * Hides the middle button and changes Texts on the other two
+     */
     private void exitEditMode(){
+        editMode = false;
         Button button1 = (Button) findViewById(R.id.button1);
         Button button2 = (Button) findViewById(R.id.button2);
         Button button3 = (Button) findViewById(R.id.button3);
@@ -168,6 +191,9 @@ public class MainActivity extends Activity {
         button3.setText("Create New");
     }
 
+    /**
+     * Clears all the editTexts to blank strings
+     */
     private void clear(){
         editText.setText("");
         commentText.setText("");
@@ -177,19 +203,31 @@ public class MainActivity extends Activity {
         waistText.setText("");
         hipText.setText("");
         inseamText.setText("");
+        dateText.setText("");
     }
 
+    /**
+     * Remove the record from the list and update the listview
+     * change back to initial mode
+     * @param v nothing
+     */
     public void delete(View v) {
         recordsList.remove(editPosition);
         adapter.notifyDataSetChanged();
         saveInFile();
-        clear();
-        editMode = false;
         exitEditMode();
+        clear();
         changeListCount();
     }
 
-    private Record createRecord() {
+    /**
+     * Takes all the editText inputs, name, neck, bust, chest, waist, hip, inseam, date, comment
+     * create record object
+     * create measure object
+     * bind measure into record object
+     * @return created Record object
+     */
+    private Record createRecord(){
         setResult(RESULT_OK);
 
         // set variable id
@@ -201,11 +239,16 @@ public class MainActivity extends Activity {
         float waist = 0;
         float hip = 0;
         float inseam = 0;
-
+        Record record;
 
         // save Name and date in records
         String text = editText.getText().toString();
-        Record record = new Record(text);
+        if( isEmpty(dateText)) {    // no date input, only save name
+            record = new Record(text);
+        } else {
+            String date = dateText.getText().toString();
+            record = new Record(text, date);
+        }
 
         // Get measurements
         try{
@@ -219,8 +262,7 @@ public class MainActivity extends Activity {
             e.printStackTrace();
         }
 
-
-        // Add measurements to record
+        // Add measurements and bind to record
         measurements.setNeck(neck);
         measurements.setBust(bust);
         measurements.setChest(chest);
@@ -236,6 +278,9 @@ public class MainActivity extends Activity {
         return record;
     }
 
+    /**
+     * Saves record date to file
+     */
     private void saveInFile() {
         try {
             FileOutputStream fos = openFileOutput(FILENAME, 0);
@@ -253,6 +298,9 @@ public class MainActivity extends Activity {
         }
     }
 
+    /**
+     * Load date from file
+     */
     private void loadFromFile() {
         try {
             FileInputStream fis = openFileInput(FILENAME);

@@ -1,5 +1,8 @@
 package com.example.jeff.jcho1_sizebook;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -8,26 +11,29 @@ import java.util.Date;
 
 public class Record {
 
-    private Date date;
+    private String date;
     private String name;
     private String comment;
     private Measurements measurements;
 
-    public Record(String name, Date date){
+    public Record(String name, String date){
         this.date = date;
         this.name = name;
     }
 
     public Record(String name){
-        this.date = new Date();
+        // get today from date and change to preferred string format
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+        Date today = new Date();
+        this.date = dateFormat.format(today);
         this.name = name;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -56,6 +62,6 @@ public class Record {
     }
 
     @Override
-    public String toString() { return name + " | " + date.toString(); }
+    public String toString() { return name + " | " + date; }
 
 }
