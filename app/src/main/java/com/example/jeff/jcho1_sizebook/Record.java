@@ -1,12 +1,11 @@
 package com.example.jeff.jcho1_sizebook;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by Jeff on 1/19/2017.
+ *  Class that implements records of user
  */
 
 public class Record {

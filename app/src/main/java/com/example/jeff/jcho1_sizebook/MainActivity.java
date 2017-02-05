@@ -33,6 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+
 public class MainActivity extends Activity {
 
     public final static String EXTRA_MESSAGE = "com.example.jeff.jcho1_sizebook.MESSAGE";
@@ -53,6 +54,12 @@ public class MainActivity extends Activity {
     private boolean editMode; // change between creating new(0) and editing old entry(1)
     private int editPosition;  // Index of entry being edited
 
+    /**
+     * Creates onclick listener for the listview
+     * When item is clicked all the information is displayed on the edit text
+     * and turns the "editmode" on     *
+     * @param savedInstanceState ..
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +67,6 @@ public class MainActivity extends Activity {
         oldRecordsList = (ListView) findViewById(R.id.oldRecordsList); //listview
         editMode = false;
         Button button2 = (Button) findViewById(R.id.button2);
-
         button2.setVisibility(View.GONE);
 
         // listview onclick listener

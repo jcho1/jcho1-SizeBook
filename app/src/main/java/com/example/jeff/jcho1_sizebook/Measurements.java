@@ -4,6 +4,7 @@ import java.util.Date;
 
 /**
  * Created by jcho1 on 1/31/17.
+ * Class that stores all the measurement data
  */
 
 public class Measurements{
