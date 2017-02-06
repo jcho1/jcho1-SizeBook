@@ -25,7 +25,7 @@
         android:id="@+id/entry_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint = "Name of the fatty"
+        android:hint = "Name"
         android:textAlignment="center"/>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

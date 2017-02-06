@@ -82,12 +82,12 @@ public class MainActivity extends Activity {
                 commentText.setText(recordsList.get(position).getComment());
                 neckText.setText(""+oldmeasurement.getNeck());
                 bustText.setText(""+oldmeasurement.getBust());
-                chestText.setText(""+ oldmeasurement.getBust());
+                chestText.setText(""+ oldmeasurement.getChest());
                 waistText.setText(""+oldmeasurement.getWaist());
                 hipText.setText(""+oldmeasurement.getHip());
                 inseamText.setText(""+oldmeasurement.getInseam());
 
-                Toast.makeText(getBaseContext(),"Showing Entry" + position+1,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(),"Showing Entry" + position,Toast.LENGTH_SHORT).show();
 
                 // Change to edit mode
                 editMode = true;
@@ -157,6 +157,7 @@ public class MainActivity extends Activity {
         adapter.notifyDataSetChanged();
         saveInFile();
         changeListCount();
+        exitEditMode();
     }
 
     /**
